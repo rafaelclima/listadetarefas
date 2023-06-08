@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <script type="text/javascript" src="./assets/js/index.js" defer></script>
+    <link rel="stylesheet" href="./assets/css/index.css">
+  </head>
+
+  <body>
+    <nav class="menu-lateral">
+      <div class="btn-expandir">
+        <i class="bi bi-list"></i>
+        <i class="bi bi-x-lg"></i>
+      </div>
+
+      <form id="form-tarefa">
+        <div class="form-group">
+          <label for="titulo">Título da Tarefa:</label>
+          <input type="text" class="form-control" id="titulo" name="titulo">
+        </div>
+        <div class="form-group">
+          <label for="horario">Horário Agendado:</label>
+          <input type="time" class="form-control" id="horario" name="horario">
+        </div>
+        <div class="form-group">
+          <label for="descricao">Descrição da Tarefa:</label>
+          <textarea class="form-control" id="descricao" name="descricao" rows="5" placeholder="Escreva uma pequena descrição da sua tarefa..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Prioridade da Tarefa:</label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="prioridade" id="prioridade-alta" value="alta">
+            <label class="form-check-label" for="prioridade-alta">Alta</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="prioridade" id="prioridade-media" value="media">
+            <label class="form-check-label" for="prioridade-media">Média</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="prioridade" id="prioridade-baixa" value="baixa">
+            <label class="form-check-label" for="prioridade-baixa">Baixa</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-salvar">Salvar tarefa</button>
+        <div class="form-group" id="filtro-data">
+          <label for="filtro-data">Filtrar por data:</label>
+          <input type="date" class="form-control" id="filtro-data" name="filtro-data">
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-filtrar">Filtrar</button>
+      </form>
+    </nav>
+
+    <main>
+      <div class="titulo-data">
+        <h1>Lista de tarefas</h1>
+        <div class="icon-data">
+          <i class="bi bi-calendar-check"></i>
+          <span class="data-atual"></span>
+        </div>
+      </div>
+
+      <div class="welcome">
+        <h2>Olá, bem vindo(a)</h2>
+        <p>Esta é a sua lista de tarefas. Aqui você vai poder salvar seus compromissos diários, verificar as próximas tarefas agendadas do seu dia e manter seu tempo organizado. Assim que você salvar sua primeira tarefa, já verá a mágica acontecer. Será criado um card com um resumo da sua tarefa, onde você poderá marcar como concluída, editar ou excluir. Você também terá a possibilidade de filtrar tarefas por dia. Então, chega de conversa e comece a criar suas tarefas e organizar seu tempo. Basta clicar no menu hamburguer na lateral esquerda dessa página e começar.</p>
+      </div>
+
+      <div class="card-grid">
+
+      </div>
+    </main>
+  </body>
+
+</html>
