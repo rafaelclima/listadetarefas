@@ -72,12 +72,19 @@ btnSalvar.addEventListener('click', function() {
 
   }else {
     salvarTarefas.push({tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje})
-  }
 
+  }
+  
   if (salvarTarefas.length > 0) {
     const [objetoTarefa] = salvarTarefas
     const {tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje} = objetoTarefa;
     criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+  }
+  document.getElementById('titulo').value = ''
+  document.getElementById('horario').value = ''
+  document.getElementById('descricao').value = ''
+  if (document.querySelector('input[type="radio"]:checked')) {
+    document.querySelector('input[type="radio"]').checked = false
   }
 })
 
