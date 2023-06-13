@@ -83,9 +83,10 @@ btnSalvar.addEventListener('click', function() {
   document.getElementById('titulo').value = ''
   document.getElementById('horario').value = ''
   document.getElementById('descricao').value = ''
-  if (document.querySelector('input[type="radio"]:checked')) {
-    document.querySelector('input[type="radio"]').checked = false
-  }
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach(radio => {
+    radio.checked = false;
+  });
 })
 
 function criarCard(titulo, horario, descricao, prioridade) {
