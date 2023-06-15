@@ -87,6 +87,7 @@ btnSalvar.addEventListener('click', function() {
   radios.forEach(radio => {
     radio.checked = false;
   });
+
 })
 
 function criarCard(titulo, horario, descricao, prioridade) {
@@ -104,10 +105,14 @@ function criarCard(titulo, horario, descricao, prioridade) {
   btnCards.className = 'btn-cards'
   const btnEditar = document.createElement('button')
   btnEditar.innerText = 'Editar'
+  btnEditar.classList = 'btn-edit'
   const btnConcluir = document.createElement('button')
   btnConcluir.innerText = 'Concluir'
+  btnConcluir.classList = 'btn-concluir'
   const btnExcluir = document.createElement('button')
   btnExcluir.innerText = 'Excluir'
+  btnExcluir.classList = 'btn-excluir'
+
   
   if (prioridade === 'alta') {
     cardContent.style.backgroundColor = '#E80E0C'
@@ -125,10 +130,54 @@ function criarCard(titulo, horario, descricao, prioridade) {
     horarioSpan.style.color = '#000'
     descricaoP.style.color = '#000'
   }
-
+  
   btnCards.append(btnEditar, btnConcluir, btnExcluir)
   cardContent.append(tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
+  btnEditar.addEventListener('click', (ev) => {
+    editarTarefa(ev.currentTarget)
+  })
+}
+
+function editarTarefa(btnEdit) {
+  const card = btnEdit.parentNode.parentNode;
+  const titulo = card.querySelector('h2').innerText
+  const span = card.querySelector('span').innerText
+  const desc = card.querySelector('p').innerText
+  const computedStyles = getComputedStyle(card);
+  const backgroundColor = computedStyles.backgroundColor;
   
+  if (backgroundColor === 'rgb(232, 14, 12)') {
+    document.getElementById('prioridade-alta').checked = true
+  } else if (backgroundColor === 'rgb(255, 184, 25)') {
+    document.getElementById('prioridade-media').checked = true
+  } else if (backgroundColor === 'rgb(9, 155, 179)') {
+    document.getElementById('prioridade-baixa').checked = true
+  }
+  
+  const tituloTarefa = document.querySelector('#titulo')
+  tituloTarefa.value = titulo
+  const spanTarefa = document.querySelector('#horario')
+  spanTarefa.value = span
+  const descricaoTarefa = document.querySelector('#descricao')
+  descricaoTarefa.value = desc
+
+  card.parentNode.removeChild(card);
+
+  
+  //linha.classList.add('editando')
+
+  // if (tdTarefa.isContentEditable) {
+  //   tdTarefa.contentEditable = false;
+  //   tdDesc.contentEditable = false;
+  //   btnEdit.innerText = 'Editar';
+  //   linha.classList.remove('editando')
+  // } else {
+  //   tdTarefa.contentEditable = true;
+  //   tdDesc.contentEditable = true;
+  //   btnEdit.innerText = 'Salvar';
+  //   tdTarefa.focus()
+  // }
+  // salvarTarefas()
 }
