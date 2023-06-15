@@ -137,10 +137,13 @@ function criarCard(titulo, horario, descricao, prioridade) {
   cardContent.append(tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
-  const btnEdit = document.querySelector('.btn-edit')
-  btnEdit.addEventListener('click', (ev) => {
-    editarTarefa(ev.currentTarget)
-  })
+  const btnEdit = document.querySelectorAll('.btn-edit')
+  btnEdit.forEach(button => {
+    button.addEventListener('click', (event) => {
+      const botaoClicado = event.target;
+      editarTarefa(botaoClicado)
+    });
+  });
 
 }
 
@@ -189,13 +192,13 @@ function editarTarefa(btnEdit) {
 }
 
 function fnEditFinalizar(ev) {
-  const btnEditFinalizar = document.querySelector('.btn-edit-concluir')
-  btnEditFinalizar.style.display = 'inline-block'
-
   const card = ev
   const titulo = card.querySelector('h2').innerText
   const span = card.querySelector('span').innerText
   const desc = card.querySelector('p').innerText
+  const btnEditFinalizar = card.querySelector('.btn-edit-concluir')
+
+  btnEditFinalizar.style.display = 'inline-block'
 
   const tituloTarefa = document.querySelector('#titulo')
   tituloTarefa.value = titulo
@@ -225,12 +228,10 @@ function fnEditFinalizar(ev) {
     });
 
     btnEditFinalizar.style.display = 'none';
-    const btnEdited = document.querySelector('.btn-edit');
+    const btnEdited = card.querySelector('.btn-edit');
     btnEdited.style.display = 'inline-block';
 
-    console.log(tituloTarefa, spanTarefa, descricaoTarefa);
     // Limpeza dos campos removida aqui
-
     tituloTarefa.value = ''
     spanTarefa.value = ''
     descricaoTarefa.value = ''
