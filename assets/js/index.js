@@ -144,7 +144,6 @@ function criarCard(titulo, horario, descricao, prioridade) {
 
 }
 
-
 function editarTarefa(btnEdit) {
   const card = btnEdit.parentNode.parentNode;
   const titulo = card.querySelector('h2').innerText
@@ -171,45 +170,8 @@ function editarTarefa(btnEdit) {
   //card.parentNode.removeChild(card);
 
   btnEdit.style.display = 'none';
-  const btnEditFinalizar = document.querySelector('.btn-edit-concluir')
-  btnEditFinalizar.style.display = 'inline-block'
+  fnEditFinalizar(card)
 
-  btnEditFinalizar.addEventListener('click', () => {
-    const tituloEditado = card.querySelector('h2')
-    tituloEditado.innerText = document.querySelector('#titulo').value
-    const spanEditado = card.querySelector('span')
-    spanEditado.innerText = spanTarefa.value
-    const descEditado = card.querySelector('p')
-    descEditado.innerText = descricaoTarefa.value
-
-    const checkedRadio = document.querySelectorAll('input[type="radio"]');
-    checkedRadio.forEach(radioChecked => {
-      if (radioChecked.checked) {
-
-        if (radioChecked.id === 'prioridade-alta') {
-          card.style.backgroundColor = 'rgb(232, 14, 12)';
-        }else if (radioChecked.id === 'prioridade-media') {
-          card.style.backgroundColor = 'rgb(255, 184, 25)'
-        }else if (radioChecked.id === 'prioridade-baixa') {
-          card.style.backgroundColor = 'rgb(9, 155, 179)'
-        }
-        
-      }
-    })
-
-    tituloTarefa.value = ''
-    spanTarefa.value = ''
-    descricaoTarefa.value = ''
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach(radio => {
-      radio.checked = false;
-    });
-    
-    btnEditFinalizar.style.display = 'none'
-    btnEdit.style.display = 'inline-block';
-  
-    
-  })
   //linha.classList.add('editando')
   
   // if (tdTarefa.isContentEditable) {
@@ -224,4 +186,63 @@ function editarTarefa(btnEdit) {
   //   tdTarefa.focus()
   // }
   // salvarTarefas()
+}
+
+function fnEditFinalizar(ev) {
+  const btnEditFinalizar = document.querySelector('.btn-edit-concluir')
+  btnEditFinalizar.style.display = 'inline-block'
+
+  const card = ev
+  const titulo = card.querySelector('h2').innerText
+  const span = card.querySelector('span').innerText
+  const desc = card.querySelector('p').innerText
+
+  const tituloTarefa = document.querySelector('#titulo')
+  tituloTarefa.value = titulo
+  const spanTarefa = document.querySelector('#horario')
+  spanTarefa.value = span
+  const descricaoTarefa = document.querySelector('#descricao')
+  descricaoTarefa.value = desc
+
+  const btnEditFinalizarClickHandler = () => {
+    const tituloEditado = card.querySelector('h2');
+    tituloEditado.innerText = tituloTarefa.value;
+    const spanEditado = card.querySelector('span');
+    spanEditado.innerText = spanTarefa.value;
+    const descEditado = card.querySelector('p');
+    descEditado.innerText = descricaoTarefa.value;
+    const checkedRadio = document.querySelectorAll('input[type="radio"]');
+    checkedRadio.forEach(radioChecked => {
+      if (radioChecked.checked) {
+        if (radioChecked.id === 'prioridade-alta') {
+          card.style.backgroundColor = 'rgb(232, 14, 12)';
+        } else if (radioChecked.id === 'prioridade-media') {
+          card.style.backgroundColor = 'rgb(255, 184, 25)';
+        } else if (radioChecked.id === 'prioridade-baixa') {
+          card.style.backgroundColor = 'rgb(9, 155, 179)';
+        }
+      }
+    });
+
+    btnEditFinalizar.style.display = 'none';
+    const btnEdited = document.querySelector('.btn-edit');
+    btnEdited.style.display = 'inline-block';
+
+    console.log(tituloTarefa, spanTarefa, descricaoTarefa);
+    // Limpeza dos campos removida aqui
+
+    tituloTarefa.value = ''
+    spanTarefa.value = ''
+    descricaoTarefa.value = ''
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+      radio.checked = false;
+    });
+
+    // Remover o evento de clique antes de adicioná-lo novamente
+    btnEditFinalizar.removeEventListener('click', btnEditFinalizarClickHandler);
+  };
+
+  // Adicionar o evento de clique apenas uma vez
+  btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
 }
