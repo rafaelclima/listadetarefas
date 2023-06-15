@@ -87,7 +87,6 @@ btnSalvar.addEventListener('click', function() {
   radios.forEach(radio => {
     radio.checked = false;
   });
-
 })
 
 function criarCard(titulo, horario, descricao, prioridade) {
@@ -106,6 +105,9 @@ function criarCard(titulo, horario, descricao, prioridade) {
   const btnEditar = document.createElement('button')
   btnEditar.innerText = 'Editar'
   btnEditar.classList = 'btn-edit'
+  const btnEditarConcluir = document.createElement('button')
+  btnEditarConcluir.innerText = 'Finalizar'
+  btnEditarConcluir.classList = 'btn-edit-concluir'
   const btnConcluir = document.createElement('button')
   btnConcluir.innerText = 'Concluir'
   btnConcluir.classList = 'btn-concluir'
@@ -131,14 +133,17 @@ function criarCard(titulo, horario, descricao, prioridade) {
     descricaoP.style.color = '#000'
   }
   
-  btnCards.append(btnEditar, btnConcluir, btnExcluir)
+  btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
   cardContent.append(tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
-  btnEditar.addEventListener('click', (ev) => {
+  const btnEdit = document.querySelector('.btn-edit')
+  btnEdit.addEventListener('click', (ev) => {
     editarTarefa(ev.currentTarget)
   })
+
 }
+
 
 function editarTarefa(btnEdit) {
   const card = btnEdit.parentNode.parentNode;
@@ -146,7 +151,7 @@ function editarTarefa(btnEdit) {
   const span = card.querySelector('span').innerText
   const desc = card.querySelector('p').innerText
   const computedStyles = getComputedStyle(card);
-  const backgroundColor = computedStyles.backgroundColor;
+  let backgroundColor = computedStyles.backgroundColor;
   
   if (backgroundColor === 'rgb(232, 14, 12)') {
     document.getElementById('prioridade-alta').checked = true
@@ -163,11 +168,50 @@ function editarTarefa(btnEdit) {
   const descricaoTarefa = document.querySelector('#descricao')
   descricaoTarefa.value = desc
 
-  card.parentNode.removeChild(card);
+  //card.parentNode.removeChild(card);
 
+  btnEdit.style.display = 'none';
+  const btnEditFinalizar = document.querySelector('.btn-edit-concluir')
+  btnEditFinalizar.style.display = 'inline-block'
+
+  btnEditFinalizar.addEventListener('click', () => {
+    const tituloEditado = card.querySelector('h2')
+    tituloEditado.innerText = document.querySelector('#titulo').value
+    const spanEditado = card.querySelector('span')
+    spanEditado.innerText = spanTarefa.value
+    const descEditado = card.querySelector('p')
+    descEditado.innerText = descricaoTarefa.value
+
+    const checkedRadio = document.querySelectorAll('input[type="radio"]');
+    checkedRadio.forEach(radioChecked => {
+      if (radioChecked.checked) {
+
+        if (radioChecked.id === 'prioridade-alta') {
+          card.style.backgroundColor = 'rgb(232, 14, 12)';
+        }else if (radioChecked.id === 'prioridade-media') {
+          card.style.backgroundColor = 'rgb(255, 184, 25)'
+        }else if (radioChecked.id === 'prioridade-baixa') {
+          card.style.backgroundColor = 'rgb(9, 155, 179)'
+        }
+        
+      }
+    })
+
+    tituloTarefa.value = ''
+    spanTarefa.value = ''
+    descricaoTarefa.value = ''
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+      radio.checked = false;
+    });
+    
+    btnEditFinalizar.style.display = 'none'
+    btnEdit.style.display = 'inline-block';
   
+    
+  })
   //linha.classList.add('editando')
-
+  
   // if (tdTarefa.isContentEditable) {
   //   tdTarefa.contentEditable = false;
   //   tdDesc.contentEditable = false;
