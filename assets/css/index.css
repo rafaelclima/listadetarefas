@@ -101,30 +101,49 @@ textarea.form-control {
 /* .menu-lateral:hover {
   width: 300px;
 } */
+.btn-expandir {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* Alinha os elementos à direita */
+}
 
 .btn-expandir i {
   font-size: 2.8rem;
   cursor: pointer;
 }
 
-.btn-expandir {
-  margin: 1rem 0 1.8rem 1rem;
-}
-
 .btn-expandir .bi-x-lg {
-  display: none;
-  transition: all .2s ease-in-out;
+  visibility: hidden;
+  transition: all .3s ease;
 }
 
 .btn-expandir .bi-list {
-  /* display: none; */
-  transition: all .2s ease-in-out;
+  position: absolute;
+  left: 50%;
+  /* Move o elemento para o centro horizontal */
+  transform: translateX(-50%);
+  /* Centraliza o elemento */
+  transition: all .01s ease-in-out;
 }
 
+.menu-aberto .btn-expandir {
+  justify-content: center;
+  /* Centraliza os elementos quando o menu está aberto */
+}
+
+.menu-aberto .bi-x-lg {
+  visibility: visible;
+}
+
+
+
 .grid-card {
-  width: calc(100% - 74px);
+  width: calc(100% - 5%);
   height: 100vh;
-  margin: 1.6rem auto auto 74px;
+  margin: 1.6rem auto auto 5%;
   padding: 0 1.6rem;
   text-align: center;
   transition: all .2s ease-in-out;

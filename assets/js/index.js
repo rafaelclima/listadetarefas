@@ -1,4 +1,5 @@
 const btnExpandir = document.querySelector('.btn-expandir')
+const btnSalvar = document.querySelector('#btn-salvar')
 const diaDeHoje = document.querySelector('.data-atual')
 const dataAtual = new Date()
 const gridCard = document.querySelector('.grid-card')
@@ -6,6 +7,9 @@ const divWellcome = document.querySelector('.wellcome')
 let contClick = 0
 
 diaDeHoje.innerText = formataData(dataAtual)
+
+btnExpandir.addEventListener('click', abrirFecharMenu)
+btnSalvar.addEventListener('click', salvarCard)
 
 function formataData(data) {
   const dia = zeroEsquerda(data.getDate())
@@ -33,46 +37,37 @@ function clearInputs() {
   });
 }
 
+function abrirFecharMenu() {
+  const iconeExpandir = document.querySelector('.bi-list');
+  const iconeClose = document.querySelector('.bi-x-lg');
+  const menuLateral = document.querySelector('.menu-lateral');
+  const formulario = document.getElementById('form-tarefa');
 
-btnExpandir.addEventListener('click', function(){
+  if (menuLateral.style.width === '20%') { // Verifica se o menu está aberto
 
-  if(contClick === 0) {
-    contClick = 1
+    menuLateral.style.width = '5%';
+    formulario.style.visibility = 'hidden';
+    iconeClose.style.visibility = 'hidden';
+    iconeExpandir.style.visibility = 'visible';
+    gridCard.style.width = 'calc(100% - 5%)';
+    gridCard.style.margin = '1.6rem auto auto 5%';
+    btnExpandir.classList.remove('menu-aberto');
 
-    const menuLateral = document.querySelector('.menu-lateral')
-    menuLateral.style.width = '20%'
-    const formulario = document.getElementById('form-tarefa')
-    formulario.style.visibility = 'visible'
-    const iconeExpandir = document.querySelector('.bi-list')
-    iconeExpandir.style.display = 'none'
-    const iconeClose = document.querySelector('.bi-x-lg')
-    iconeClose.style.display = 'block'
+  } else { // Menu está fechado
 
-    gridCard.style.width = 'calc(100% - 20%)'
-    gridCard.style.margin = '1.6rem auto auto 20%'
-
-  }else {
-    contClick = 0
-
-    const menuLateral = document.querySelector('.menu-lateral')
-    menuLateral.style.width = '5%'
-    const formulario = document.getElementById('form-tarefa')
-    formulario.style.visibility = 'hidden'
-    const iconeClose = document.querySelector('.bi-x-lg')
-    iconeClose.style.display = 'none'
-    const iconeExpandir = document.querySelector('.bi-list')
-    iconeExpandir.style.display = 'block'
-
-    gridCard.style.width = 'calc(100% - 5%)'
-    gridCard.style.margin = '1.6rem auto auto 5%'
+    menuLateral.style.width = '20%';
+    formulario.style.visibility = 'visible';
+    iconeExpandir.style.visibility = 'hidden';
+    iconeClose.style.visibility = 'visible';
+    gridCard.style.width = 'calc(100% - 20%)';
+    gridCard.style.margin = '1.6rem auto auto 20%';
+    btnExpandir.classList.add('menu-aberto');
 
   }
+}
 
-})
-
-
-const btnSalvar = document.querySelector('#btn-salvar')
-btnSalvar.addEventListener('click', function() {
+function salvarCard() {
+  
   const salvarTarefas = []
   const tituloTarefa = document.getElementById('titulo').value
   const horarioAgendado = document.getElementById('horario').value
@@ -95,14 +90,11 @@ btnSalvar.addEventListener('click', function() {
     const {tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje} = objetoTarefa;
     criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
   }
-  document.getElementById('titulo').value = ''
-  document.getElementById('horario').value = ''
-  document.getElementById('descricao').value = ''
-  const radios = document.querySelectorAll('input[type="radio"]');
-  radios.forEach(radio => {
-    radio.checked = false;
-  });
-})
+
+  clearInputs()
+
+}
+
 
 function criarCard(titulo, horario, descricao, prioridade) {
 
@@ -186,8 +178,6 @@ function editarTarefa(btnEdit) {
 
   btnEdit.style.display = 'none';
   fnEditFinalizar(card)
-
-  //linha.classList.add('editando')
   
   // if (tdTarefa.isContentEditable) {
   //   tdTarefa.contentEditable = false;
@@ -202,6 +192,7 @@ function editarTarefa(btnEdit) {
   // }
   // salvarTarefas()
 }
+
 
 function fnEditFinalizar(ev) {
   const card = ev;
