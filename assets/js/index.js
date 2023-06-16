@@ -43,7 +43,7 @@ function abrirFecharMenu() {
   const menuLateral = document.querySelector('.menu-lateral');
   const formulario = document.getElementById('form-tarefa');
 
-  if (menuLateral.style.width === '20%') { // Verifica se o menu está aberto
+  if (menuLateral.style.width === '15%') { // Verifica se o menu está aberto
 
     menuLateral.style.width = '5%';
     formulario.style.visibility = 'hidden';
@@ -55,12 +55,12 @@ function abrirFecharMenu() {
 
   } else { // Menu está fechado
 
-    menuLateral.style.width = '20%';
+    menuLateral.style.width = '15%';
     formulario.style.visibility = 'visible';
     iconeExpandir.style.visibility = 'hidden';
     iconeClose.style.visibility = 'visible';
-    gridCard.style.width = 'calc(100% - 20%)';
-    gridCard.style.margin = '1.6rem auto auto 20%';
+    gridCard.style.width = 'calc(100% - 15%)';
+    gridCard.style.margin = '1.6rem auto auto 15%';
     btnExpandir.classList.add('menu-aberto');
 
   }
