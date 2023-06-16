@@ -237,7 +237,6 @@ function fnEditFinalizar(ev) {
     const btnEdited = card.querySelector('.btn-edit');
     btnEdited.style.display = 'inline-block';
     btnEditFinalizar.removeEventListener('click', btnEditFinalizarClickHandler);
-    console.log('cheguei...')
     clearInputs()
   };
   
