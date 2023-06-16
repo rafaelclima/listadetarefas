@@ -18,6 +18,21 @@ function zeroEsquerda(num) {
   return num < 10 ? `0${num}` : num
 }
 
+function clearInputs() {
+  const titulo = document.getElementById('titulo')
+  const horario = document.getElementById('horario')
+  const descricao = document.getElementById('descricao')
+  
+  titulo.value = ''
+  horario.value = ''
+  descricao.value = ''
+  
+  const radios = document.querySelectorAll('input[type="radio"]');
+  radios.forEach(radio => {
+    radio.checked = false;
+  });
+}
+
 
 btnExpandir.addEventListener('click', function(){
 
@@ -25,7 +40,7 @@ btnExpandir.addEventListener('click', function(){
     contClick = 1
 
     const menuLateral = document.querySelector('.menu-lateral')
-    menuLateral.style.width = '325px'
+    menuLateral.style.width = '20%'
     const formulario = document.getElementById('form-tarefa')
     formulario.style.visibility = 'visible'
     const iconeExpandir = document.querySelector('.bi-list')
@@ -33,14 +48,14 @@ btnExpandir.addEventListener('click', function(){
     const iconeClose = document.querySelector('.bi-x-lg')
     iconeClose.style.display = 'block'
 
-    gridCard.style.width = 'calc(100% - 325px)'
-    gridCard.style.margin = '1.6rem auto auto 325px'
+    gridCard.style.width = 'calc(100% - 20%)'
+    gridCard.style.margin = '1.6rem auto auto 20%'
 
   }else {
     contClick = 0
 
     const menuLateral = document.querySelector('.menu-lateral')
-    menuLateral.style.width = '70px'
+    menuLateral.style.width = '5%'
     const formulario = document.getElementById('form-tarefa')
     formulario.style.visibility = 'hidden'
     const iconeClose = document.querySelector('.bi-x-lg')
@@ -48,8 +63,8 @@ btnExpandir.addEventListener('click', function(){
     const iconeExpandir = document.querySelector('.bi-list')
     iconeExpandir.style.display = 'block'
 
-    gridCard.style.width = 'calc(100% - 74px)'
-    gridCard.style.margin = '1.6rem auto auto 74px'
+    gridCard.style.width = 'calc(100% - 5%)'
+    gridCard.style.margin = '1.6rem auto auto 5%'
 
   }
 
@@ -137,15 +152,12 @@ function criarCard(titulo, horario, descricao, prioridade) {
   cardContent.append(tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
-  const btnEdit = document.querySelectorAll('.btn-edit')
-  btnEdit.forEach(button => {
-    button.addEventListener('click', (event) => {
-      const botaoClicado = event.target;
-      editarTarefa(botaoClicado)
-    });
+  btnEditar.addEventListener('click', function(event) {
+    const botaoClicado = event.target;
+    editarTarefa(botaoClicado);
   });
-
 }
+
 
 function editarTarefa(btnEdit) {
   const card = btnEdit.parentNode.parentNode;
@@ -192,22 +204,16 @@ function editarTarefa(btnEdit) {
 }
 
 function fnEditFinalizar(ev) {
-  const card = ev
-  const titulo = card.querySelector('h2').innerText
-  const span = card.querySelector('span').innerText
-  const desc = card.querySelector('p').innerText
-  const btnEditFinalizar = card.querySelector('.btn-edit-concluir')
-
-  btnEditFinalizar.style.display = 'inline-block'
-
-  const tituloTarefa = document.querySelector('#titulo')
-  tituloTarefa.value = titulo
-  const spanTarefa = document.querySelector('#horario')
-  spanTarefa.value = span
-  const descricaoTarefa = document.querySelector('#descricao')
-  descricaoTarefa.value = desc
-
+  const card = ev;
+  const btnEditFinalizar = card.querySelector('.btn-edit-concluir');
+  btnEditFinalizar.style.display = 'inline-block';
+  
   const btnEditFinalizarClickHandler = () => {
+
+    const tituloTarefa = document.querySelector('#titulo');
+    const spanTarefa = document.querySelector('#horario');
+    const descricaoTarefa = document.querySelector('#descricao');
+
     const tituloEditado = card.querySelector('h2');
     tituloEditado.innerText = tituloTarefa.value;
     const spanEditado = card.querySelector('span');
@@ -230,20 +236,11 @@ function fnEditFinalizar(ev) {
     btnEditFinalizar.style.display = 'none';
     const btnEdited = card.querySelector('.btn-edit');
     btnEdited.style.display = 'inline-block';
-
-    // Limpeza dos campos removida aqui
-    tituloTarefa.value = ''
-    spanTarefa.value = ''
-    descricaoTarefa.value = ''
-    const radios = document.querySelectorAll('input[type="radio"]');
-    radios.forEach(radio => {
-      radio.checked = false;
-    });
-
-    // Remover o evento de clique antes de adicioná-lo novamente
     btnEditFinalizar.removeEventListener('click', btnEditFinalizarClickHandler);
+    console.log('cheguei...')
+    clearInputs()
   };
-
-  // Adicionar o evento de clique apenas uma vez
+  
   btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
 }
+

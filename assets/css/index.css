@@ -66,10 +66,10 @@ textarea.form-control {
   width: 99%;
   padding: .6rem;
   border-radius: 5px;
-  margin: .5rem auto 1.6rem auto;
+  margin: 1rem auto;
 }
 
-#btn-salvar {
+#btn-clear {
   margin-bottom: 4.8rem;
 }
 
@@ -85,7 +85,7 @@ textarea.form-control {
 }
 
 .menu-lateral {
-  width: 70px;
+  width: 5%;
   height: 100%;
   background-color: #202020;
   padding: 1rem;
