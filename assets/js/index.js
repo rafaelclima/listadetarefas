@@ -1,4 +1,5 @@
 const btnExpandir = document.querySelector('.btn-expandir')
+const btnFiltrar = document.querySelector('#btn-filtrar')
 const btnSalvar = document.querySelector('#btn-salvar')
 const diaDeHoje = document.querySelector('.data-atual')
 const dataAtual = new Date()
@@ -43,7 +44,7 @@ function abrirFecharMenu() {
   const menuLateral = document.querySelector('.menu-lateral');
   const formulario = document.getElementById('form-tarefa');
 
-  if (menuLateral.style.width === '15%') { // Verifica se o menu está aberto
+  if (btnExpandir.classList.contains('menu-aberto')) { // Verifica se o menu está aberto
 
     menuLateral.style.width = '5%';
     formulario.style.visibility = 'hidden';
@@ -54,7 +55,6 @@ function abrirFecharMenu() {
     btnExpandir.classList.remove('menu-aberto');
 
   } else { // Menu está fechado
-
     menuLateral.style.width = '15%';
     formulario.style.visibility = 'visible';
     iconeExpandir.style.visibility = 'hidden';
@@ -175,8 +175,20 @@ function editarTarefa(btnEdit) {
   descricaoTarefa.value = desc
 
   //card.parentNode.removeChild(card);
+  const cardContentDiv = document.querySelectorAll('.card-content')
+  cardContentDiv.forEach(function(cardsContent) {
+    if (cardsContent != card)  {
+      cardsContent.style.filter = 'blur(5px)'
+    }
+  })
+
+  if (!btnExpandir.classList.contains('menu-aberto')) {
+    abrirFecharMenu()
+  }
 
   btnEdit.style.display = 'none';
+  btnSalvar.disabled = true
+  btnFiltrar.disabled = true
   fnEditFinalizar(card)
   
   // if (tdTarefa.isContentEditable) {
@@ -224,11 +236,25 @@ function fnEditFinalizar(ev) {
       }
     });
 
+    const cardContentDiv = document.querySelectorAll('.card-content')
+    cardContentDiv.forEach(function(cardsContent) {
+      if (cardsContent != card)  {
+        cardsContent.style.filter = 'none'
+      }
+    })
+
+    if (btnExpandir.classList.contains('menu-aberto')) {
+      abrirFecharMenu()
+    }
+    
     btnEditFinalizar.style.display = 'none';
     const btnEdited = card.querySelector('.btn-edit');
     btnEdited.style.display = 'inline-block';
     btnEditFinalizar.removeEventListener('click', btnEditFinalizarClickHandler);
     clearInputs()
+    btnSalvar.disabled = false
+    btnFiltrar.disabled = false
+
   };
   
   btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
