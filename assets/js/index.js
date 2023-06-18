@@ -101,6 +101,8 @@ function criarCard(titulo, horario, descricao, prioridade) {
   const divCards = document.querySelector('.cards')
   const cardContent = document.createElement('div')
   cardContent.className = 'card-content'
+  const itemBg = document.createElement('div')
+  itemBg.className = 'item-bg'
   const tituloH2 = document.createElement('h2')
   tituloH2.innerHTML = titulo
   const horarioSpan = document.createElement('span')
@@ -124,24 +126,24 @@ function criarCard(titulo, horario, descricao, prioridade) {
 
   
   if (prioridade === 'alta') {
-    cardContent.style.backgroundColor = '#E80E0C'
+    itemBg.style.backgroundColor = '#E80E0C'
     tituloH2.style.color = '#fff'
     horarioSpan.style.color = '#fff'
     descricaoP.style.color = '#fff'
   }else if (prioridade === 'media') {
-    cardContent.style.backgroundColor = '#FFB819'
-    tituloH2.style.color = '#000'
-    horarioSpan.style.color = '#000'
-    descricaoP.style.color = '#000'
+    itemBg.style.backgroundColor = '#FFB819'
+    // tituloH2.style.color = '#000'
+    // horarioSpan.style.color = '#000'
+    // descricaoP.style.color = '#000'
   }else if (prioridade === 'baixa') {
-    cardContent.style.backgroundColor = '#099BB3'
-    tituloH2.style.color = '#000'
-    horarioSpan.style.color = '#000'
-    descricaoP.style.color = '#000'
+    itemBg.style.backgroundColor = '#099BB3'
+    // tituloH2.style.color = '#000'
+    // horarioSpan.style.color = '#000'
+    // descricaoP.style.color = '#000'
   }
   
   btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
-  cardContent.append(tituloH2, horarioSpan, descricaoP, btnCards)
+  cardContent.append(itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
   btnEditar.addEventListener('click', function(event) {
@@ -223,15 +225,16 @@ function fnEditFinalizar(ev) {
     spanEditado.innerText = spanTarefa.value;
     const descEditado = card.querySelector('p');
     descEditado.innerText = descricaoTarefa.value;
+    const itemBgCard = card.querySelector('.item-bg')
     const checkedRadio = document.querySelectorAll('input[type="radio"]');
     checkedRadio.forEach(radioChecked => {
       if (radioChecked.checked) {
         if (radioChecked.id === 'prioridade-alta') {
-          card.style.backgroundColor = 'rgb(232, 14, 12)';
+          itemBgCard.style.backgroundColor = 'rgb(232, 14, 12)';
         } else if (radioChecked.id === 'prioridade-media') {
-          card.style.backgroundColor = 'rgb(255, 184, 25)';
+          itemBgCard.style.backgroundColor = 'rgb(255, 184, 25)';
         } else if (radioChecked.id === 'prioridade-baixa') {
-          card.style.backgroundColor = 'rgb(9, 155, 179)';
+          itemBgCard.style.backgroundColor = 'rgb(9, 155, 179)';
         }
       }
     });
@@ -259,4 +262,3 @@ function fnEditFinalizar(ev) {
   
   btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
 }
-
