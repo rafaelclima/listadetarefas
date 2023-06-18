@@ -51,7 +51,7 @@ function abrirFecharMenu() {
     iconeClose.style.visibility = 'hidden';
     iconeExpandir.style.visibility = 'visible';
     gridCard.style.width = 'calc(100% - 5%)';
-    gridCard.style.margin = '1.6rem auto auto 5%';
+    gridCard.style.margin = 'auto auto auto 5%';
     btnExpandir.classList.remove('menu-aberto');
 
   } else { // Menu está fechado
@@ -60,7 +60,7 @@ function abrirFecharMenu() {
     iconeExpandir.style.visibility = 'hidden';
     iconeClose.style.visibility = 'visible';
     gridCard.style.width = 'calc(100% - 15%)';
-    gridCard.style.margin = '1.6rem auto auto 15%';
+    gridCard.style.margin = 'auto auto auto 15%';
     btnExpandir.classList.add('menu-aberto');
 
   }

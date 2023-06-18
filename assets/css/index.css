@@ -17,6 +17,7 @@ body {
 .form-group {
   margin-bottom: 1.6rem;
   width: 100%;
+  z-index: 3;
 }
 
 form {
@@ -92,6 +93,7 @@ textarea.form-control {
   color: #ced4da;
   box-shadow: 3px 0 0 #FF0077;
   transition: all .37s ease-in-out;
+  z-index: 2;
 
   position: fixed;
   top: 0;
@@ -140,13 +142,14 @@ textarea.form-control {
 .grid-card {
   width: calc(100% - 5%);
   height: calc(100vh - 1.6rem);
-  margin: 1.6rem auto auto 5%;
+  margin: auto auto auto 5%;
   padding: 0 1.6rem;
   text-align: center;
   transition: all .2s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 }
 
 .grid-card h1 {
@@ -156,15 +159,16 @@ textarea.form-control {
 
 .cards {
   width: 100%;
-  margin-top: 1.6rem;
+  height: calc(100vh - 10.1rem);
+  margin-top: 1.2rem;
   display: grid;
-  grid-template-columns: repeat(3, 32.92%);
+  grid-template-columns: repeat(3, 32%);
   grid-auto-rows: max-content;
   gap: .8rem;
   padding: 1rem;
+  overflow-y: auto;
 
   align-items: center;
-  align-content: center;
   justify-content: center;
 }
 
@@ -176,12 +180,7 @@ textarea.form-control {
   position: relative;
   overflow: hidden;
   z-index: 2;
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly; */
-  /* filter: blur(5px); */
+  transition: all .3s ease;
 }
 
 .card-content h2 {
