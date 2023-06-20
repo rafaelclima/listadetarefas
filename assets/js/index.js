@@ -127,19 +127,57 @@ function criarCard(titulo, horario, descricao, prioridade) {
   
   if (prioridade === 'alta') {
     itemBg.style.backgroundColor = '#E80E0C'
-    tituloH2.style.color = '#fff'
-    horarioSpan.style.color = '#fff'
-    descricaoP.style.color = '#fff'
+    btnEditar.classList.add('btn-prioridade-alta');
+    btnConcluir.classList.add('btn-prioridade-alta');
+    btnExcluir.classList.add('btn-prioridade-alta');
+    
+    cardContent.addEventListener('mouseenter', () => {
+      btnEditar.classList.add('btn-prioridade-alta-hover');
+      btnConcluir.classList.add('btn-prioridade-alta-hover');
+      btnExcluir.classList.add('btn-prioridade-alta-hover');
+    })
+    cardContent.addEventListener('mouseleave', () => {
+      btnEditar.classList.remove('btn-prioridade-alta-hover');
+      btnConcluir.classList.remove('btn-prioridade-alta-hover');
+      btnExcluir.classList.remove('btn-prioridade-alta-hover');
+    })
+
   }else if (prioridade === 'media') {
     itemBg.style.backgroundColor = '#FFB819'
-    // tituloH2.style.color = '#000'
-    // horarioSpan.style.color = '#000'
-    // descricaoP.style.color = '#000'
+
+    btnEditar.classList.add('btn-prioridade-media');
+    btnConcluir.classList.add('btn-prioridade-media');
+    btnExcluir.classList.add('btn-prioridade-media');
+    
+    cardContent.addEventListener('mouseenter', () => {
+      btnEditar.classList.add('btn-prioridade-media-hover');
+      btnConcluir.classList.add('btn-prioridade-media-hover');
+      btnExcluir.classList.add('btn-prioridade-media-hover');
+    })
+    cardContent.addEventListener('mouseleave', () => {
+      btnEditar.classList.remove('btn-prioridade-media-hover');
+      btnConcluir.classList.remove('btn-prioridade-media-hover');
+      btnExcluir.classList.remove('btn-prioridade-media-hover');
+    })
+
   }else if (prioridade === 'baixa') {
     itemBg.style.backgroundColor = '#099BB3'
-    // tituloH2.style.color = '#000'
-    // horarioSpan.style.color = '#000'
-    // descricaoP.style.color = '#000'
+
+    btnEditar.classList.add('btn-prioridade-baixa');
+    btnConcluir.classList.add('btn-prioridade-baixa');
+    btnExcluir.classList.add('btn-prioridade-baixa');
+    
+    cardContent.addEventListener('mouseenter', () => {
+      btnEditar.classList.add('btn-prioridade-baixa-hover');
+      btnConcluir.classList.add('btn-prioridade-baixa-hover');
+      btnExcluir.classList.add('btn-prioridade-baixa-hover');
+    })
+    cardContent.addEventListener('mouseleave', () => {
+      btnEditar.classList.remove('btn-prioridade-baixa-hover');
+      btnConcluir.classList.remove('btn-prioridade-baixa-hover');
+      btnExcluir.classList.remove('btn-prioridade-baixa-hover');
+    })
+
   }
   
   btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
@@ -227,6 +265,7 @@ function fnEditFinalizar(ev) {
     descEditado.innerText = descricaoTarefa.value;
     const itemBgCard = card.querySelector('.item-bg')
     const checkedRadio = document.querySelectorAll('input[type="radio"]');
+    
     checkedRadio.forEach(radioChecked => {
       if (radioChecked.checked) {
         if (radioChecked.id === 'prioridade-alta') {

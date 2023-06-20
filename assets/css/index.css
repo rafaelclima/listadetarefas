@@ -25,12 +25,9 @@ form {
   transition: all .2s ease-in-out;
 }
 
-label {
-  font-weight: bold;
-}
-
 form label {
   font-size: 1.6rem;
+  font-weight: bold;
 }
 
 .form-control {
@@ -56,8 +53,40 @@ textarea.form-control {
 
 .form-check-input {
   position: absolute;
-  margin-top: .5rem;
-  margin-left: 6rem;
+  margin-top: .8rem;
+  margin-left: 9.5rem;
+  transform: scale(1.3);
+}
+
+.form-alta {
+  width: 50%;
+  height: 2.8rem;
+  border-radius: .6rem;
+  background-color: #E80E0C;
+  color: #FFF;
+  margin: 1rem 0;
+}
+
+.form-media {
+  width: 50%;
+  height: 2.8rem;
+  border-radius: .6rem;
+  background-color: #FFB819;
+  color: #000;
+  margin: 1rem 0;
+}
+
+.form-baixa {
+  width: 50%;
+  height: 2.8rem;
+  border-radius: .6rem;
+  background-color: #099BB3;
+  color: #FFF;
+  margin-top: 1rem;
+}
+
+.form-check label {
+  margin-left: .5rem;
 }
 
 .btn-primary {
@@ -112,7 +141,9 @@ textarea.form-control {
 .btn-expandir i {
   font-size: 2.8rem;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
+
 
 .btn-expandir .bi-x-lg {
   visibility: hidden;
@@ -206,7 +237,6 @@ textarea.form-control {
   text-align: center;
   margin: 12px auto;
   z-index: 2;
-
 }
 
 .btn-cards {
@@ -218,9 +248,9 @@ textarea.form-control {
   padding: 1.2rem 2.4rem;
   border: none;
   border-radius: 4px;
-  font-size: 12px;
-  color: #fff;
-  background-color: #B30053;
+  font-size: 1.6rem;
+  /* color: #fff; */
+  /* background-color: #B30053; */
   cursor: pointer;
   transition: all .3s ease;
 }
@@ -230,7 +260,7 @@ textarea.form-control {
 }
 
 
-.btn-cards button:hover {
+/* .btn-cards button:hover {
   background-color: #b3005485;
 }
 
@@ -240,7 +270,7 @@ textarea.form-control {
 
 .btn-cards button:active {
   background-color: #6b0032;
-}
+} */
 
 .item-bg {
   height: 140px;
@@ -337,4 +367,48 @@ textarea.form-control {
   max-width: 75%;
   margin: 1.6rem auto 0 auto;
   font-size: 1.8rem;
+}
+
+.btn-prioridade-alta {
+  background-color: #E80E0C;
+  color: #FFF;
+  transition: all .3s ease;
+}
+
+.btn-prioridade-alta-hover {
+  background-color: #202020;
+}
+
+.btn-prioridade-alta-hover:hover {
+  background-color: #353535;
+}
+
+.btn-prioridade-media {
+  background-color: #FFB819;
+  color: #000;
+  transition: all .3s ease;
+}
+
+.btn-prioridade-media-hover {
+  background-color: #202020;
+  color: #fff;
+}
+
+.btn-prioridade-media-hover:hover {
+  background-color: #353535;
+}
+
+.btn-prioridade-baixa {
+  background-color: #099BB3;
+  color: #FFF;
+  transition: all .3s ease;
+}
+
+.btn-prioridade-baixa-hover {
+  background-color: #202020;
+  color: #fff;
+}
+
+.btn-prioridade-baixa-hover:hover {
+  background-color: #353535;
 }
