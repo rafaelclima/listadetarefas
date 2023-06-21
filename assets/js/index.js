@@ -133,6 +133,11 @@ function criarCard(titulo, horario, descricao, prioridade) {
     editarTarefa(botaoClicado);
   });
 
+  btnConcluir.addEventListener('click', function(event) {
+    const botaoClicado = event.target;
+    concluirTarefa(botaoClicado);
+  });
+
   const allBtnsCard = btnCards.querySelectorAll('button')
   
   if (prioridade === 'alta') {
@@ -349,4 +354,16 @@ function fnEditFinalizar(el) {
   };
   
   btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
+}
+
+function concluirTarefa(concluirCard) {
+  const card = concluirCard.parentNode.parentNode;
+  console.log(card)
+  const tituloCard = card.querySelector('h2')
+  const horarioCard = card.querySelector('span')
+  const descricaoCard = card.querySelector('p')
+
+  tituloCard.style.textDecoration = 'line-through'
+  horarioCard.style.textDecoration = 'line-through'
+  descricaoCard.style.textDecoration = 'line-through'
 }
