@@ -124,10 +124,6 @@ function criarCard(titulo, horario, descricao, prioridade) {
   btnExcluir.innerText = 'Excluir'
   btnExcluir.classList = 'btn-excluir'
 
-  btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
-  cardContent.append(itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
-  divCards.append(cardContent)
-
   btnEditar.addEventListener('click', function(event) {
     const botaoClicado = event.target;
     editarTarefa(botaoClicado);
@@ -137,6 +133,16 @@ function criarCard(titulo, horario, descricao, prioridade) {
     const botaoClicado = event.target;
     concluirTarefa(botaoClicado);
   });
+
+  btnExcluir.addEventListener('click', function(event) {
+    const botaoClicado = event.target;
+    excluirTarefa(botaoClicado);
+  });
+
+  btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
+  cardContent.append(itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
+  divCards.append(cardContent)
+
 
   const allBtnsCard = btnCards.querySelectorAll('button')
   
@@ -358,7 +364,6 @@ function fnEditFinalizar(el) {
 
 function concluirTarefa(concluirCard) {
   const card = concluirCard.parentNode.parentNode;
-  console.log(card)
   const tituloCard = card.querySelector('h2')
   const horarioCard = card.querySelector('span')
   const descricaoCard = card.querySelector('p')
@@ -366,4 +371,50 @@ function concluirTarefa(concluirCard) {
   tituloCard.style.textDecoration = 'line-through'
   horarioCard.style.textDecoration = 'line-through'
   descricaoCard.style.textDecoration = 'line-through'
+}
+
+function excluirTarefa(excluirCard) {
+  const card = excluirCard.parentNode.parentNode;
+  excluirCard.setAttribute('data-bs-toggle', 'modal');
+  excluirCard.setAttribute('data-bs-target', '#staticBackdrop');
+  const divModal = document.createElement('div')
+
+
+  divModal.innerHTML = `
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Excluir Tarefa</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Deseja realmente excluir essa tarefa?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger btn-excluir-tarefa">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `
+
+  card.append(divModal)
+  const modalElement = document.querySelector('#staticBackdrop');
+  const modal = new bootstrap.Modal(modalElement);
+
+  const btnExcluirTarefa = divModal.querySelector('.btn.btn-danger.btn-excluir-tarefa');
+
+  btnExcluirTarefa.addEventListener('click', () => {
+    card.remove();
+    modal.hide();
+    divModal.remove(); // Remove o elemento do modal do DOM
+  });
+
+  modalElement.addEventListener('hidden.bs.modal', () => {
+    divModal.remove(); // Remove o elemento do modal do DOM ao fechar o modal
+  });
+
+  modal.show();
 }
