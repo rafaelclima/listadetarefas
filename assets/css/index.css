@@ -11,7 +11,7 @@
 
 #body {
   max-height: 100vh;
-  background-color: #454545;
+  background-color: #404040;
 }
 
 .form-group-lista {
@@ -176,6 +176,7 @@ textarea.form-control-lista {
 
 
 .grid-card {
+  position: relative;
   width: calc(100% - 5%);
   height: calc(100vh - 1.6rem);
   margin: auto auto auto 5%;
@@ -186,11 +187,13 @@ textarea.form-control-lista {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  z-index: 1;
 }
 
 .grid-card h1 {
   font-size: 3.6rem;
   color: #fff;
+  margin-top: 1rem;
 }
 
 .cards {
@@ -215,15 +218,15 @@ textarea.form-control-lista {
   padding: 2rem;
   position: relative;
   overflow: hidden;
-  z-index: 2;
+  z-index: 1;
   transition: all .3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .card-content h2 {
   font-size: 3rem;
   color: #fff;
   text-align: center;
-  z-index: 2;
 }
 
 .card-content span {
@@ -232,7 +235,6 @@ textarea.form-control-lista {
   display: block;
   text-align: center;
   margin: 12px auto;
-  z-index: 2;
 
 }
 
@@ -241,12 +243,10 @@ textarea.form-control-lista {
   color: #fff;
   text-align: center;
   margin: 12px auto;
-  z-index: 2;
 }
 
 .btn-cards {
   text-align: center;
-  z-index: -1;
 }
 
 .btn-cards button {
@@ -264,23 +264,10 @@ textarea.form-control-lista {
   margin: 0 .6rem;
 }
 
-
-/* .btn-cards button:hover {
-  background-color: #b3005485;
-}
-
-.btn-cards button:focus {
-  outline: none;
-}
-
-.btn-cards button:active {
-  background-color: #6b0032;
-} */
-
 .item-bg {
   height: 140px;
   width: 140px;
-  background-color: #f9b234;
+  /* background-color: #f9b234; */
 
   z-index: -1;
   position: absolute;
@@ -419,5 +406,25 @@ textarea.form-control-lista {
 }
 
 .modal-backdrop {
-  z-index: 2;
+  z-index: -1;
+}
+
+.modal-content {
+  background-color: #f2f2f2;
+  font-size: 1.6rem;
+}
+
+#staticBackdropLabel {
+  color: #000;
+  font-size: 1.4em;
+}
+
+[data-bs-dismiss="modal"] {
+  font-size: 1.4rem;
+  padding: 1.4rem;
+}
+
+.btn-excluir-tarefa {
+  font-size: 1.4rem;
+  padding: 1.4rem;
 }

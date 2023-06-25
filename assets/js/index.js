@@ -92,6 +92,7 @@ function salvarCard() {
   }
 
   clearInputs()
+  abrirFecharMenu()
 
 }
 
@@ -211,8 +212,9 @@ function editarTarefa(btnEdit) {
   const titulo = card.querySelector('h2').innerText
   const span = card.querySelector('span').innerText
   const desc = card.querySelector('p').innerText
-  const computedStyles = getComputedStyle(card);
-  let backgroundColor = computedStyles.backgroundColor;
+  const bgColorItemBg = card.querySelector('.item-bg')
+  const computedStyles = getComputedStyle(bgColorItemBg);
+  const backgroundColor = computedStyles.backgroundColor;
   
   if (backgroundColor === 'rgb(232, 14, 12)') {
     document.getElementById('prioridade-alta').checked = true
@@ -281,21 +283,18 @@ function fnEditFinalizar(el) {
     const itemBgCard = card.querySelector('.item-bg')
     const checkedRadio = document.querySelectorAll('input[type="radio"]');
 
-    const divBtnOnCard = card.querySelector('.btn-cards')
+    // const divBtnOnCard = card.querySelector('.btn-cards')
     const removeClassBgCard = card.querySelectorAll('button')
     removeClassBgCard.forEach(bgCard => {
       if (bgCard.classList.contains('btn-prioridade-alta')) {
         bgCard.classList.remove('btn-prioridade-alta')
         bgCard.classList.remove('btn-prioridade-alta-hover')
-        console.log('chegou aqui remove.priori.alta')
       }else if (bgCard.classList.contains('btn-prioridade-media')) {
         bgCard.classList.remove('btn-prioridade-media')
         bgCard.classList.remove('btn-prioridade-media-hover')
-        console.log('chegou aqui remove.priori.media')
       }else if (bgCard.classList.contains('btn-prioridade-baixa')) {
         bgCard.classList.remove('btn-prioridade-baixa')
         bgCard.classList.remove('btn-prioridade-baixa-hover')
-        console.log('chegou aqui remove.priori.baixa')
       }
     })
 
@@ -400,7 +399,10 @@ function excluirTarefa(excluirCard) {
   </div>
   `
 
-  card.append(divModal)
+  // card.append(divModal)
+  const gridCardElement = document.querySelector('.grid-card');
+  gridCardElement.appendChild(divModal);
+
   const modalElement = document.querySelector('#staticBackdrop');
   const modal = new bootstrap.Modal(modalElement);
 
