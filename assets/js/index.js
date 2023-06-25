@@ -363,13 +363,76 @@ function fnEditFinalizar(el) {
 
 function concluirTarefa(concluirCard) {
   const card = concluirCard.parentNode.parentNode;
-  const tituloCard = card.querySelector('h2')
-  const horarioCard = card.querySelector('span')
-  const descricaoCard = card.querySelector('p')
 
-  tituloCard.style.textDecoration = 'line-through'
-  horarioCard.style.textDecoration = 'line-through'
-  descricaoCard.style.textDecoration = 'line-through'
+  concluirCard.setAttribute('data-bs-toggle', 'modal');
+  concluirCard.setAttribute('data-bs-target', '#staticBackdrop');
+  const divModal = document.createElement('div')
+
+
+  divModal.innerHTML = `
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Concluir tarefa</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          Deseja realmente concluir essa tarefa?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger btn-excluir-tarefa">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  `
+
+  // card.append(divModal)
+  const gridCardElement = document.querySelector('.grid-card');
+  gridCardElement.appendChild(divModal);
+
+  const modalElement = document.querySelector('#staticBackdrop');
+  const modal = new bootstrap.Modal(modalElement);
+
+  const btnExcluirTarefa = divModal.querySelector('.btn.btn-danger.btn-excluir-tarefa');
+
+  btnExcluirTarefa.addEventListener('click', () => {
+
+    const tituloCard = card.querySelector('h2')
+    const horarioCard = card.querySelector('span')
+    const descricaoCard = card.querySelector('p')
+    const addIcon = document.createElement('i')
+    addIcon.classList.add('bi', 'bi-check2-circle')
+  
+    card.append(addIcon)
+  
+    const btnEdit = card.querySelector('.btn-edit')
+    const btnConcluir = card.querySelector('.btn-concluir')
+    const btnExcluir = card.querySelector('.btn-excluir')
+  
+    btnEdit.style.display = 'none'
+    btnConcluir.style.width = '50%'
+    btnConcluir.style.backgroundColor = '#4ebc00'
+    btnConcluir.innerText = 'Tarefa Concluída'
+    btnConcluir.disabled = 'true'
+    btnExcluir.style.width = '30%'
+    
+  
+    tituloCard.style.textDecoration = 'line-through'
+    horarioCard.style.textDecoration = 'line-through'
+    descricaoCard.style.textDecoration = 'line-through'
+
+    modal.hide();
+    divModal.remove(); // Remove o elemento do modal do DOM
+  });
+
+  modalElement.addEventListener('hidden.bs.modal', () => {
+    divModal.remove(); // Remove o elemento do modal do DOM ao fechar o modal
+  });
+
+  modal.show();
 }
 
 function excluirTarefa(excluirCard) {
