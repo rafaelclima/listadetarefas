@@ -6,6 +6,7 @@ const dataAtual = new Date()
 const gridCard = document.querySelector('.grid-card')
 const divWellcome = document.querySelector('.wellcome')
 let contClick = 0
+let arrLocalStorage = []
 
 diaDeHoje.innerText = formataData(dataAtual)
 
@@ -82,13 +83,19 @@ function salvarCard() {
 
   }else {
     salvarTarefas.push({tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje})
-
   }
   
   if (salvarTarefas.length > 0) {
     const [objetoTarefa] = salvarTarefas
     const {tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje} = objetoTarefa;
     criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+
+    if (localStorage.meusCards) {
+      arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
+    }
+
+    arrLocalStorage.push([tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje])
+    localStorage.meusCards = JSON.stringify(arrLocalStorage)
   }
 
   clearInputs()
@@ -247,19 +254,6 @@ function editarTarefa(btnEdit) {
   btnSalvar.disabled = true
   btnFiltrar.disabled = true
   fnEditFinalizar(card)
-  
-  // if (tdTarefa.isContentEditable) {
-  //   tdTarefa.contentEditable = false;
-  //   tdDesc.contentEditable = false;
-  //   btnEdit.innerText = 'Editar';
-  //   linha.classList.remove('editando')
-  // } else {
-  //   tdTarefa.contentEditable = true;
-  //   tdDesc.contentEditable = true;
-  //   btnEdit.innerText = 'Salvar';
-  //   tdTarefa.focus()
-  // }
-  // salvarTarefas()
 }
 
 
@@ -267,6 +261,15 @@ function fnEditFinalizar(el) {
   const card = el;
   const btnEditFinalizar = card.querySelector('.btn-edit-concluir');
   btnEditFinalizar.style.display = 'inline-block';
+
+  const divCards = document.querySelector('.cards');
+  const cardContents = divCards.querySelectorAll('.card-content');
+  
+  cardContents.forEach((cardContent, index) => {
+    cardContent.setAttribute('data-index', index);
+  });
+
+  const cardIndex = card.getAttribute('data-index')
   
   const btnEditFinalizarClickHandler = () => {
 
@@ -298,9 +301,11 @@ function fnEditFinalizar(el) {
       }
     })
 
+    let prioridadeEditada
     checkedRadio.forEach(radioChecked => {
       if (radioChecked.checked) {
         if (radioChecked.id === 'prioridade-alta') {
+          prioridadeEditada = 'alta'
           itemBgCard.style.backgroundColor = 'rgb(232, 14, 12)';
           removeClassBgCard.forEach(addClass => {
             addClass.classList.add('btn-prioridade-alta')
@@ -312,6 +317,7 @@ function fnEditFinalizar(el) {
             })
           })
         } else if (radioChecked.id === 'prioridade-media') {
+          prioridadeEditada = 'media'
           itemBgCard.style.backgroundColor = 'rgb(255, 184, 25)';
           removeClassBgCard.forEach(addClass => {
             addClass.classList.add('btn-prioridade-media')
@@ -323,6 +329,7 @@ function fnEditFinalizar(el) {
             })
           })
         } else if (radioChecked.id === 'prioridade-baixa') {
+          prioridadeEditada = 'baixa'
           itemBgCard.style.backgroundColor = 'rgb(9, 155, 179)';
           removeClassBgCard.forEach(addClass => {
             addClass.classList.add('btn-prioridade-baixa')
@@ -355,6 +362,20 @@ function fnEditFinalizar(el) {
     clearInputs()
     btnSalvar.disabled = false
     btnFiltrar.disabled = false
+
+    const novoTituloTarefa = tituloEditado.innerText;
+    const novoHorarioAgendado = spanEditado.innerText;
+    const novaDescricaoTarefa = descEditado.innerText;
+    const novaPrioridadeTarefa = prioridadeEditada;
+
+    arrLocalStorage[cardIndex] = [
+      novoTituloTarefa,
+      novoHorarioAgendado,
+      novaDescricaoTarefa,
+      novaPrioridadeTarefa
+    ];
+
+    localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
 
   };
   
@@ -439,9 +460,18 @@ function excluirTarefa(excluirCard) {
   const card = excluirCard.parentNode.parentNode;
   excluirCard.setAttribute('data-bs-toggle', 'modal');
   excluirCard.setAttribute('data-bs-target', '#staticBackdrop');
+
+  const divCards = document.querySelector('.cards');
+  const cardContents = divCards.querySelectorAll('.card-content');
+  if (!card.getAttribute('data-index')) {
+    cardContents.forEach((cardContent, index) => {
+      cardContent.setAttribute('data-index', index);
+    });
+  }
+
+  const cardIndex = card.getAttribute('data-index')
+
   const divModal = document.createElement('div')
-
-
   divModal.innerHTML = `
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -475,6 +505,9 @@ function excluirTarefa(excluirCard) {
     card.remove();
     modal.hide();
     divModal.remove(); // Remove o elemento do modal do DOM
+
+    arrLocalStorage.splice(cardIndex, 1);
+    localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
   });
 
   modalElement.addEventListener('hidden.bs.modal', () => {
@@ -483,3 +516,21 @@ function excluirTarefa(excluirCard) {
 
   modal.show();
 }
+
+function recuperarLocalStorage() {
+
+  if (localStorage.meusCards) {
+    arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
+    if (localStorage.length <= 0) {
+      divWellcome.style.display = 'none'
+    }
+  }
+
+  arrLocalStorage.forEach(cards => {
+    const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje] = cards;
+
+    criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+  })
+}
+
+recuperarLocalStorage()
