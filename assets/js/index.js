@@ -8,6 +8,20 @@ const divWellcome = document.querySelector('.wellcome')
 let contClick = 0
 let arrLocalStorage = []
 
+function recuperarLocalStorage() {
+
+  if (localStorage.meusCards) {
+    arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
+    divWellcome.style.display = 'none'
+  }
+
+  arrLocalStorage.forEach(cards => {
+    const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje] = cards;
+
+    criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+  })
+}
+
 recuperarLocalStorage()
 
 diaDeHoje.innerText = formataData(dataAtual)
@@ -524,18 +538,4 @@ function excluirTarefa(excluirCard) {
   });
 
   modal.show();
-}
-
-function recuperarLocalStorage() {
-
-  if (localStorage.meusCards) {
-    arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
-    divWellcome.style.display = 'none'
-  }
-
-  arrLocalStorage.forEach(cards => {
-    const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje] = cards;
-
-    criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
-  })
 }
