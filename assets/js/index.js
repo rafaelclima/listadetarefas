@@ -433,9 +433,9 @@ function concluirTarefa(concluirCard) {
   const modalElement = document.querySelector('#staticBackdrop');
   const modal = new bootstrap.Modal(modalElement);
 
-  const btnExcluirTarefa = divModal.querySelector('.btn.btn-danger.btn-excluir-tarefa');
+  const btnModalConcluirTarefa = divModal.querySelector('.btn.btn-danger.btn-excluir-tarefa');
 
-  btnExcluirTarefa.addEventListener('click', () => {
+  btnModalConcluirTarefa.addEventListener('click', () => {
 
     const tituloCard = card.querySelector('h2')
     const horarioCard = card.querySelector('span')
@@ -450,11 +450,11 @@ function concluirTarefa(concluirCard) {
     const btnExcluir = card.querySelector('.btn-excluir')
   
     btnEdit.style.display = 'none'
-    btnConcluir.style.width = '50%'
+    btnConcluir.style.width = '45%'
     btnConcluir.style.backgroundColor = '#4ebc00'
     btnConcluir.innerText = 'Tarefa Concluída'
     btnConcluir.disabled = 'true'
-    btnExcluir.style.width = '30%'
+    btnExcluir.style.width = '25%'
     
   
     tituloCard.style.textDecoration = 'line-through'
@@ -468,7 +468,6 @@ function concluirTarefa(concluirCard) {
   modalElement.addEventListener('hidden.bs.modal', () => {
     divModal.remove(); // Remove o elemento do modal do DOM ao fechar o modal
   });
-
   modal.show();
 }
 
