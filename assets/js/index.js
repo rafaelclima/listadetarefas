@@ -8,6 +8,8 @@ const divWellcome = document.querySelector('.wellcome')
 let contClick = 0
 let arrLocalStorage = []
 
+recuperarLocalStorage()
+
 diaDeHoje.innerText = formataData(dataAtual)
 
 btnExpandir.addEventListener('click', abrirFecharMenu)
@@ -506,8 +508,15 @@ function excluirTarefa(excluirCard) {
     modal.hide();
     divModal.remove(); // Remove o elemento do modal do DOM
 
-    arrLocalStorage.splice(cardIndex, 1);
-    localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
+    if (arrLocalStorage.length === 1) {
+      arrLocalStorage.splice(cardIndex, 1);
+      localStorage.clear()
+      divWellcome.style.display = 'block'
+      // localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
+    }else {
+      arrLocalStorage.splice(cardIndex, 1);
+      localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
+    }
   });
 
   modalElement.addEventListener('hidden.bs.modal', () => {
@@ -521,9 +530,7 @@ function recuperarLocalStorage() {
 
   if (localStorage.meusCards) {
     arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
-    if (localStorage.length <= 0) {
-      divWellcome.style.display = 'none'
-    }
+    divWellcome.style.display = 'none'
   }
 
   arrLocalStorage.forEach(cards => {
@@ -532,5 +539,3 @@ function recuperarLocalStorage() {
     criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
   })
 }
-
-recuperarLocalStorage()
