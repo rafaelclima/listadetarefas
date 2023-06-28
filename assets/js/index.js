@@ -16,9 +16,18 @@ function recuperarLocalStorage() {
   }
 
   arrLocalStorage.forEach(cards => {
-    const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje] = cards;
 
-    criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+    if (cards.length === 6) {
+      const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje, concluido] = cards;
+      
+      criarCardConcluido(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, concluido)
+
+    }else {
+      const [tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje] = cards;
+
+      criarCard(tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa)
+    }
+
   })
 }
 
@@ -167,6 +176,108 @@ function criarCard(titulo, horario, descricao, prioridade) {
   cardContent.append(itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
   divCards.append(cardContent)
 
+
+  const allBtnsCard = btnCards.querySelectorAll('button')
+  
+  if (prioridade === 'alta') {
+    itemBg.style.backgroundColor = '#E80E0C'
+    allBtnsCard.forEach(addClass => {
+      addClass.classList.add('btn-prioridade-alta')
+    })
+    
+    cardContent.addEventListener('mouseenter', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.add('btn-prioridade-alta-hover')
+      })
+    })
+
+    cardContent.addEventListener('mouseleave', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.remove('btn-prioridade-alta-hover')
+      })
+    })
+
+  }else if (prioridade === 'media') {
+    itemBg.style.backgroundColor = '#FFB819'
+
+    allBtnsCard.forEach(addClass => {
+      addClass.classList.add('btn-prioridade-media')
+    })
+    
+    cardContent.addEventListener('mouseenter', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.add('btn-prioridade-media-hover')
+      })
+    })
+
+    cardContent.addEventListener('mouseleave', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.remove('btn-prioridade-media-hover')
+      })
+    })
+
+  }else if (prioridade === 'baixa') {
+    itemBg.style.backgroundColor = '#099BB3'
+    allBtnsCard.forEach(addClass => {
+      addClass.classList.add('btn-prioridade-baixa')
+    })
+    
+    cardContent.addEventListener('mouseenter', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.add('btn-prioridade-baixa-hover')
+      })
+    })
+
+    cardContent.addEventListener('mouseleave', () => {
+      allBtnsCard.forEach(addClass => {
+        addClass.classList.remove('btn-prioridade-baixa-hover')
+      })
+    })
+
+  }
+
+}
+
+function criarCardConcluido(titulo, horario, descricao, prioridade, concluido) {
+
+  const divCards = document.querySelector('.cards')
+  const cardContent = document.createElement('div')
+  cardContent.className = 'card-content'
+  const itemBg = document.createElement('div')
+  itemBg.className = 'item-bg'
+  const tituloH2 = document.createElement('h2')
+  tituloH2.innerHTML = titulo
+  tituloH2.style.textDecoration = 'line-through'
+  const horarioSpan = document.createElement('span')
+  horarioSpan.innerHTML = horario
+  horarioSpan.style.textDecoration = 'line-through'
+  const descricaoP = document.createElement('p')
+  descricaoP.innerHTML = descricao
+  descricaoP.style.textDecoration = 'line-through'
+  const btnCards = document.createElement('div')
+  btnCards.className = 'btn-cards'
+
+  const addIcon = document.createElement('i')
+  addIcon.classList.add('bi', 'bi-check2-circle')
+  const btnConcluir = document.createElement('button')
+  btnConcluir.innerText = 'Tarefa Concluída'
+  btnConcluir.classList = 'btn-concluir'
+  btnConcluir.style.width = '45%'
+  btnConcluir.style.backgroundColor = '#4ebc00'
+  btnConcluir.disabled = 'true'
+  const btnExcluir = document.createElement('button')
+  btnExcluir.innerText = 'Excluir'
+  btnExcluir.classList = 'btn-excluir'
+  btnExcluir.style.width = '25%'
+
+  btnExcluir.addEventListener('click', function(event) {
+    const botaoClicado = event.target;
+    excluirTarefa(botaoClicado);
+  });
+
+  btnCards.append(btnConcluir, btnExcluir)
+  cardContent.append(addIcon ,itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
+  divCards.append(cardContent)
 
   const allBtnsCard = btnCards.querySelectorAll('button')
   
@@ -437,6 +548,14 @@ function concluirTarefa(concluirCard) {
 
   btnModalConcluirTarefa.addEventListener('click', () => {
 
+    const divCards = document.querySelector('.cards');
+    const cardContents = divCards.querySelectorAll('.card-content');
+    if (!card.getAttribute('data-index')) {
+      cardContents.forEach((cardContent, index) => {
+        cardContent.setAttribute('data-index', index);
+      });
+    }
+
     const tituloCard = card.querySelector('h2')
     const horarioCard = card.querySelector('span')
     const descricaoCard = card.querySelector('p')
@@ -460,6 +579,12 @@ function concluirTarefa(concluirCard) {
     tituloCard.style.textDecoration = 'line-through'
     horarioCard.style.textDecoration = 'line-through'
     descricaoCard.style.textDecoration = 'line-through'
+
+    const cardIndex = card.getAttribute('data-index')
+
+    arrLocalStorage[cardIndex].push(cardIndex)
+
+    localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
 
     modal.hide();
     divModal.remove(); // Remove o elemento do modal do DOM
