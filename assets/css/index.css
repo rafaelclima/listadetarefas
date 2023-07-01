@@ -592,4 +592,8 @@ textarea.form-control-lista {
     font-size: 1.2rem;
   }
 
+  #staticBackdrop {
+    margin: 6rem auto 0 auto;
+  }
+
 }
