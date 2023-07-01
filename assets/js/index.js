@@ -70,26 +70,51 @@ function abrirFecharMenu() {
   const menuLateral = document.querySelector('.menu-lateral');
   const formulario = document.getElementById('form-tarefa');
 
-  if (btnExpandir.classList.contains('menu-aberto')) { // Verifica se o menu está aberto
-
-    menuLateral.style.width = '5%';
-    formulario.style.visibility = 'hidden';
-    iconeClose.style.visibility = 'hidden';
-    iconeExpandir.style.visibility = 'visible';
-    gridCard.style.width = 'calc(100% - 5%)';
-    gridCard.style.margin = 'auto auto auto 5%';
-    btnExpandir.classList.remove('menu-aberto');
-
-  } else { // Menu está fechado
-    menuLateral.style.width = '15%';
-    formulario.style.visibility = 'visible';
-    iconeExpandir.style.visibility = 'hidden';
-    iconeClose.style.visibility = 'visible';
-    gridCard.style.width = 'calc(100% - 15%)';
-    gridCard.style.margin = 'auto auto auto 15%';
-    btnExpandir.classList.add('menu-aberto');
-
+  if (window.innerWidth <= 768) {
+    // Ação a ser executada quando a largura da tela for menor ou igual a 768 pixels
+    if (btnExpandir.classList.contains('menu-aberto')) { // Verifica se o menu está aberto
+  
+      menuLateral.style.width = '100%';
+      menuLateral.style.height = '8%';
+      formulario.style.visibility = 'hidden';
+      iconeClose.style.visibility = 'hidden';
+      iconeExpandir.style.visibility = 'visible';
+      btnExpandir.classList.remove('menu-aberto');
+  
+    } else { // Menu está fechado
+      menuLateral.style.width = '100%';
+      menuLateral.style.height = '100vh';
+      formulario.style.visibility = 'visible';
+      iconeExpandir.style.visibility = 'hidden';
+      iconeClose.style.visibility = 'visible';
+      btnExpandir.classList.add('menu-aberto');
+  
+    }
+  } else {
+    // Ação a ser executada quando a largura da tela for maior que 768 pixels
+    // Por exemplo:
+    if (btnExpandir.classList.contains('menu-aberto')) { // Verifica se o menu está aberto
+  
+      menuLateral.style.width = '5%';
+      formulario.style.visibility = 'hidden';
+      iconeClose.style.visibility = 'hidden';
+      iconeExpandir.style.visibility = 'visible';
+      gridCard.style.width = 'calc(100% - 5%)';
+      gridCard.style.margin = 'auto auto auto 5%';
+      btnExpandir.classList.remove('menu-aberto');
+  
+    } else { // Menu está fechado
+      menuLateral.style.width = '15%';
+      formulario.style.visibility = 'visible';
+      iconeExpandir.style.visibility = 'hidden';
+      iconeClose.style.visibility = 'visible';
+      gridCard.style.width = 'calc(100% - 15%)';
+      gridCard.style.margin = 'auto auto auto 15%';
+      btnExpandir.classList.add('menu-aberto');
+  
+    }
   }
+
 }
 
 function salvarCard() {
@@ -569,7 +594,7 @@ function concluirTarefa(concluirCard) {
     const btnExcluir = card.querySelector('.btn-excluir')
   
     btnEdit.style.display = 'none'
-    btnConcluir.style.width = '45%'
+    btnConcluir.style.width = '50%'
     btnConcluir.style.backgroundColor = '#4ebc00'
     btnConcluir.innerText = 'Tarefa Concluída'
     btnConcluir.disabled = 'true'
