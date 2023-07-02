@@ -26,7 +26,7 @@
 
 form {
   visibility: hidden;
-  transition: all .2s ease-in-out;
+  /* transition: all .2s ease-in-out; */
 }
 
 form label {
@@ -126,7 +126,7 @@ textarea.form-control-lista {
   padding: 1rem;
   color: #ced4da;
   box-shadow: 3px 0 0 #FF0077;
-  transition: all .37s ease-in-out;
+  /* transition: all .37s ease-in-out; */
   z-index: 2;
 
   position: fixed;
@@ -441,13 +441,19 @@ textarea.form-control-lista {
 
 /* MEDIA QUERY - SmartPhone */
 
-@media screen and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   /* Estilos para smartphones com largura de até 480px */
 
   .menu-lateral {
     /* Estilos do menu para telas menores */
     width: 100%;
     height: 8%;
+    overflow: scroll;
+    border: none;
+    border-bottom: #FF0077 solid 1px;
+    box-shadow: 0px 2px 4px rgba(255, 0, 119, 0.5);
+
+    /* transition: all .3s ease-in-out; */
   }
 
   .btn-expandir {
@@ -464,7 +470,8 @@ textarea.form-control-lista {
 
   .btn-expandir .bi-list {
     position: absolute;
-    left: 92%;
+    top: -10%;
+    left: 90%;
     transform: none;
     transition: all .1s ease-in-out;
   }
@@ -538,8 +545,8 @@ textarea.form-control-lista {
   .grid-card {
     position: relative;
     width: 100%;
-    height: calc(100vh - 6rem);
-    margin: 6rem auto 0 auto;
+    height: calc(100vh - 12rem);
+    margin: 7rem auto 0 auto;
     padding: 0 1.6rem;
     text-align: center;
     transition: all .2s ease-in-out;
@@ -553,6 +560,7 @@ textarea.form-control-lista {
   .cards {
     grid-template-columns: 1fr;
     padding: 0;
+    margin-bottom: 1.6rem;
   }
 
   .card-content {
@@ -574,11 +582,11 @@ textarea.form-control-lista {
   }
 
   .card-content span {
-    font-size: 2rem;
+    font-size: 2.4rem;
   }
 
   .card-content p {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .card-content .btn-cards {
@@ -594,6 +602,44 @@ textarea.form-control-lista {
 
   #staticBackdrop {
     margin: 6rem auto 0 auto;
+  }
+
+  /* Menu Animations */
+
+  @keyframes circle-in-hesitate {
+    0% {
+      clip-path: circle(0%);
+    }
+
+    40% {
+      clip-path: circle(40%);
+    }
+
+    100% {
+      clip-path: circle(125%);
+    }
+  }
+
+  [transition-style="in:circle:hesitate"] {
+    animation: .8s cubic-bezier(.25, 1, .30, 1) circle-in-hesitate both;
+  }
+
+  @keyframes wipe-out-up {
+    from {
+      clip-path: inset(0 0 0 0);
+    }
+
+    to {
+      clip-path: inset(0 0 100% 0);
+    }
+  }
+
+  [transition-style="out:wipe:up"] {
+    animation: .8s cubic-bezier(.25, 1, .30, 1) wipe-out-up both;
+  }
+
+  [transition-style="out:wipe:up"]:not(.animation-end) {
+    clip-path: none !important;
   }
 
 }

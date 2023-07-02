@@ -72,23 +72,29 @@ function abrirFecharMenu() {
 
   if (window.innerWidth <= 768) {
     // Ação a ser executada quando a largura da tela for menor ou igual a 768 pixels
+
     if (btnExpandir.classList.contains('menu-aberto')) { // Verifica se o menu está aberto
-  
       menuLateral.style.width = '100%';
-      menuLateral.style.height = '8%';
-      formulario.style.visibility = 'hidden';
+      // menuLateral.style.height = '8%';
+      // formulario.style.visibility = 'hidden';
+      menuLateral.style.animation = '';
+      formulario.style.animation = 'wipe-out-up 0.5s cubic-bezier(.25, 1, .30, 1) both';
       iconeClose.style.visibility = 'hidden';
       iconeExpandir.style.visibility = 'visible';
+      setTimeout(() => {
+        menuLateral.style.height = "8%";
+      }, 400);
       btnExpandir.classList.remove('menu-aberto');
   
     } else { // Menu está fechado
+      menuLateral.style.animation = 'circle-in-hesitate 0.8s cubic-bezier(.25, 1, .30, 1) both';
+      formulario.style.animation = '';
       menuLateral.style.width = '100%';
       menuLateral.style.height = '100vh';
       formulario.style.visibility = 'visible';
       iconeExpandir.style.visibility = 'hidden';
       iconeClose.style.visibility = 'visible';
       btnExpandir.classList.add('menu-aberto');
-  
     }
   } else {
     // Ação a ser executada quando a largura da tela for maior que 768 pixels
@@ -132,7 +138,7 @@ function salvarCard() {
     salvarTarefas.push({tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje})
 
   }else {
-    salvarTarefas.push({tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje})
+    salvarTarefas.unshift({tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje})
   }
   
   if (salvarTarefas.length > 0) {
@@ -144,7 +150,8 @@ function salvarCard() {
       arrLocalStorage = JSON.parse(localStorage.getItem('meusCards'))
     }
 
-    arrLocalStorage.push([tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje])
+    arrLocalStorage.unshift([tituloTarefa, horarioAgendado, descricaoTarefa, prioridadeTarefa, dataDeHoje])
+
     localStorage.meusCards = JSON.stringify(arrLocalStorage)
   }
 
@@ -199,7 +206,18 @@ function criarCard(titulo, horario, descricao, prioridade) {
 
   btnCards.append(btnEditar, btnEditarConcluir, btnConcluir, btnExcluir)
   cardContent.append(itemBg, tituloH2, horarioSpan, descricaoP, btnCards)
-  divCards.append(cardContent)
+
+  if (divCards.childElementCount > 0) {
+  
+    const firstCard = divCards.firstElementChild;
+    divCards.insertBefore(cardContent, firstCard);
+
+  } else {
+
+    divCards.append(cardContent)
+
+  }
+
 
 
   const allBtnsCard = btnCards.querySelectorAll('button')
@@ -287,7 +305,7 @@ function criarCardConcluido(titulo, horario, descricao, prioridade, concluido) {
   const btnConcluir = document.createElement('button')
   btnConcluir.innerText = 'Tarefa Concluída'
   btnConcluir.classList = 'btn-concluir'
-  btnConcluir.style.width = '45%'
+  btnConcluir.style.width = 'max-content'
   btnConcluir.style.backgroundColor = '#4ebc00'
   btnConcluir.disabled = 'true'
   const btnExcluir = document.createElement('button')
@@ -506,11 +524,11 @@ function fnEditFinalizar(el) {
     if (btnExpandir.classList.contains('menu-aberto')) {
       abrirFecharMenu()
     }
-    
+
     btnEditFinalizar.style.display = 'none';
     const btnEdited = card.querySelector('.btn-edit');
     btnEdited.style.display = 'inline-block';
-    btnEditFinalizar.removeEventListener('click', btnEditFinalizarClickHandler);
+    btnEditFinalizar.removeEventListener('click',btnEditFinalizarClickHandler);
     clearInputs()
     btnSalvar.disabled = false
     btnFiltrar.disabled = false
@@ -530,7 +548,7 @@ function fnEditFinalizar(el) {
     localStorage.setItem('meusCards', JSON.stringify(arrLocalStorage));
 
   };
-  
+
   btnEditFinalizar.addEventListener('click', btnEditFinalizarClickHandler);
 }
 
@@ -594,7 +612,7 @@ function concluirTarefa(concluirCard) {
     const btnExcluir = card.querySelector('.btn-excluir')
   
     btnEdit.style.display = 'none'
-    btnConcluir.style.width = '50%'
+    btnConcluir.style.width = 'max-content'
     btnConcluir.style.backgroundColor = '#4ebc00'
     btnConcluir.innerText = 'Tarefa Concluída'
     btnConcluir.disabled = 'true'
