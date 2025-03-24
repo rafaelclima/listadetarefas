@@ -1,5 +1,5 @@
 
-# Lista de Tarefas 📝
+# Lista de Tarefas JS 📝
 
 Um aplicativo web para gerenciar suas tarefas diárias. Crie, edite, conclua e exclua tarefas com facilidade, mantendo seu dia organizado.
 
@@ -31,7 +31,7 @@ Um aplicativo web para gerenciar suas tarefas diárias. Crie, edite, conclua e e
 
 ## 📸 Capturas de Tela
 
-  ![enter image description here](./.gitassets/pc_01)
+  ![Lista de Tarefas JS](https://github.com/rafaelclima/listadetarefas/blob/developer/.gitassets/capa.png?raw=true)
   
 ## 📜 Licença
 
